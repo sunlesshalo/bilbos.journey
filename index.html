@@ -6,6 +6,8 @@
     <title>There and Back Again: A Data-Driven Journey</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Add DOMPurify for safe HTML content injection -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Lora:wght@400;600&display=swap" rel="stylesheet">
@@ -110,8 +112,20 @@
             padding: 8px 0;
             border-top: 2px solid var(--card-border);
             border-bottom: 2px solid var(--card-border);
+            /* Ensure consistent width */
+            max-width: 80rem; /* Matches max-w-5xl (1280px) */
+            margin-left: auto;
+            margin-right: auto;
             overflow: hidden;
             white-space: nowrap;
+            /* Animation properties */
+            animation: runeFlicker 3s infinite alternate; /* Subtle flicker/pulsate */
+        }
+
+        @keyframes runeFlicker {
+            0% { opacity: 1; text-shadow: none; }
+            50% { opacity: 0.95; text-shadow: 0 0 2px rgba(46, 81, 58, 0.5); } /* Slight opacity change and subtle shadow */
+            100% { opacity: 1; text-shadow: none; }
         }
     </style>
 </head>
@@ -123,7 +137,7 @@
             <div class="rune-border">
                 <span>ᚠᛇᚻ᛫ᛒᛦᚦ᛫ᚠᚱᚩᚠᚢᚱ᛫ᚠᛁᚱᚪ᛫ᚷᛖᚻᚹᛦᛚᚳᚢᛗ᛫ᛋᚳᛖᚪᛚ᛫ᚦᛖᚪᚻ᛫ᛗᚪᚾᚾᚪ᛫ᚷᛖᚻᚹᛦᛚᚳ᛫ᛏᚱᛖᚩᚹ᛫ᚷᛁᚠᚪ᛫ᛞᚫᛚᚪᚾ᛫ᚷᛖᚻᚹᛦᛚᚳᚢᛗ</span>
             </div>
-            <h1 class="text-4xl md:text-6xl mt-8">There and Back Again</h1>
+            <h1 class="text-4xl md:text-6xl mt-16">There and Back Again</h1> <!-- Increased top margin -->
             <h2 class="text-2xl md:text-3xl mt-2">A Chronological and Geographic Analysis of Bilbo Baggins's Journey</h2>
         </header>
 
@@ -273,10 +287,8 @@
         <section class="card p-6 md:p-8">
             <h3 class="text-2xl md:text-3xl mb-6 text-center">Conclusion: The True Meaning of "An Adventure"</h3>
              <div class="text-lg leading-relaxed">
-                <p>The journey of Bilbo Baggins was a grand undertaking of approximately <strong>14 months</strong> and nearly <strong>2,000 miles</strong> (3219 km). Yet, to focus solely on these numbers is to miss their deeper significance. The duration and distance are the quantitative expression of the story's qualitative nature.</p>
-                <div class="text-right mt-4">
-                    <button class="read-more-button" data-section="conclusion">Read Full Conclusion</button>
-                </div>
+                <p class="mt-4 mb-4">The journey of Bilbo Baggins was a grand undertaking of approximately <strong>14 months</strong> and nearly <strong>2,000 miles</strong> (3219 km). Yet, to focus solely on these numbers is to miss their deeper significance. The duration and distance are the quantitative expression of the story's qualitative nature.</p>
+                <p class="mt-4 mb-4">Ultimately, the most important measure of Bilbo's journey is not in miles or days, but in the growth of its protagonist. The time spent on the road and the distance crossed were the necessary crucible for his transformation. He left Bag End a respectable, comfort-loving hobbit, a "Baggins" through and through. He returned a worldly, courageous, and profoundly changed individual, one who had conversed with a dragon, tricked a king, and played a part in a great battle. The length and episodic structure of the journey were the conditions perfectly calibrated by the author to awaken the latent "Took" side of his character, fulfilling the promise that Gandalf had seen in him from the very beginning. The journey was long enough, and far enough, to take Bilbo Baggins there and back again, not just to a mountain of gold, but to a new version of himself.</p>
             </div>
         </section>
 
@@ -284,7 +296,7 @@
 
     <footer class="text-center p-8 mt-12">
         <div class="rune-border">
-             <span>ᛞᚢᚱᛁᚾ᛫ᚠᚩᛚᚳ᛫ᚢᚾᛞᛖᚱ᛫ᚦᛖ᛫ᛗᚩᚢᚾᛏᚪᛁᚾ᛫ᚱᛖᛏᚢᚱᚾᛖᛞ᛫ᛏᚩ᛫ᛖᚱᛖᛒᚩᚱ᛫ᛚᚪᛋᛏ᛫ᚻᚩᛗᛖ᛫ᚩᚠ᛫ᛏᚻᚱᚪᛁᚾ</span>
+             <span>ᛞᚢᚱᛁᚾ᛫ᚠᚩᛚᚳ᛫ᚢᚾᛞᛖᚱ᛫ᚦᛖ᛫ᛗᚩᚢᚾᛏᚪᛁᚾ᛫ᚱᛖᛏᚢᚱᚱᚾᛖᛞ᛫ᛏᚩ᛫ᛖᚱᛖᛒᚩᚱ᛫ᛚᚪᛋᛏ᛫ᚻᚩᛗᛖ᛫ᚩᚠ᛫ᛏᚻᚱᚪᛁᚾ</span>
         </div>
     </footer>
 
@@ -346,6 +358,7 @@
         // --- Modal Logic ---
         function showModal(title, content) {
             modalTitle.textContent = title;
+            // Use DOMPurify to sanitize content before injecting into innerHTML
             modalContent.innerHTML = DOMPurify.sanitize(content, {RETURN_TRUSTED_TYPE: false});
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -357,6 +370,7 @@
             modalContent.innerHTML = '';
         }
 
+        // Add event listeners
         closeModalButton.addEventListener('click', hideModal);
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
@@ -364,12 +378,25 @@
             }
         });
 
-        // --- Event Listeners ---
+        // --- Event Listeners for Read More Buttons ---
         readMoreButtons.forEach(button => {
+            // Filter out the 'conclusion' button as its content is now directly displayed
+            if (button.dataset.section === 'conclusion') {
+                button.style.display = 'none'; // Hide the button
+                return; // Skip adding event listener for this button
+            }
+
             button.addEventListener('click', () => {
                 const sectionKey = button.dataset.section;
-                const sectionTitle = button.closest('.card, section').querySelector('h3, h4').textContent;
-                if (!Object.hasOwn(fullTexts, sectionKey)) return;  // guard against weird keys
+                // Find the closest parent section or card and then its heading
+                const parentSection = button.closest('.card, section');
+                const sectionTitleElement = parentSection ? parentSection.querySelector('h3, h4') : null;
+                const sectionTitle = sectionTitleElement ? sectionTitleElement.textContent : 'Details'; // Fallback title
+
+                if (!Object.hasOwn(fullTexts, sectionKey)) {
+                    console.error(`No full text found for section key: ${sectionKey}`);
+                    return;
+                }
                 const content = fullTexts[sectionKey];
                 showModal(sectionTitle, content);
             });
@@ -464,6 +491,5 @@
             }
         });
     </script>
- 
 </body>
 </html>
