@@ -6,7 +6,6 @@
     <title>There and Back Again: A Data-Driven Journey</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Add DOMPurify for safe HTML content injection -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,13 +111,11 @@
             padding: 8px 0;
             border-top: 2px solid var(--card-border);
             border-bottom: 2px solid var(--card-border);
-            /* Ensure consistent width */
             max-width: 80rem; /* Matches max-w-5xl (1280px) */
             margin-left: auto;
             margin-right: auto;
             overflow: hidden;
             white-space: nowrap;
-            /* Animation properties */
             animation: runeFlicker 3s infinite alternate; /* Subtle flicker/pulsate */
         }
 
@@ -127,9 +124,52 @@
             50% { opacity: 0.95; text-shadow: 0 0 2px rgba(46, 81, 58, 0.5); } /* Slight opacity change and subtle shadow */
             100% { opacity: 1; text-shadow: none; }
         }
+        
+        /* Language Switcher Styles */
+        #lang-switcher {
+        position: fixed; /* Changed from 'absolute' to 'fixed' */
+        top: 1rem;
+        right: 1.5rem;
+        z-index: 40; /* Added to ensure it stays on top of other content */
+        display: flex;
+        gap: 0.5rem;
+        background-color: var(--card-bg);
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: 1px solid var(--card-border);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+        .lang-button {
+            background: none;
+            border: 1px solid transparent;
+            color: var(--heading-green);
+            font-family: 'Lora', serif;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            transition: all 0.2s ease-in-out;
+        }
+        .lang-button:hover {
+            border-color: var(--heading-green);
+            background-color: var(--bg-parchment-green);
+        }
+        .lang-button.active {
+            background-color: var(--heading-green);
+            color: var(--card-bg);
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="antialiased">
+
+    <div id="lang-switcher">
+        <button class="lang-button" data-lang="en">EN</button>
+        <span class="text-gray-400">|</span>
+        <button class="lang-button" data-lang="hu">HU</button>
+        <span class="text-gray-400">|</span>
+        <button class="lang-button" data-lang="ro">RO</button>
+    </div>
 
     <main class="container mx-auto p-4 md:p-8 max-w-5xl">
 
@@ -137,38 +177,37 @@
             <div class="rune-border">
                 <span>ᚠᛇᚻ᛫ᛒᛦᚦ᛫ᚠᚱᚩᚠᚢᚱ᛫ᚠᛁᚱᚪ᛫ᚷᛖᚻᚹᛦᛚᚳᚢᛗ᛫ᛋᚳᛖᚪᛚ᛫ᚦᛖᚪᚻ᛫ᛗᚪᚾᚾᚪ᛫ᚷᛖᚻᚹᛦᛚᚳ᛫ᛏᚱᛖᚩᚹ᛫ᚷᛁᚠᚪ᛫ᛞᚫᛚᚪᚾ᛫ᚷᛖᚻᚹᛦᛚᚳᚢᛗ</span>
             </div>
-            <h1 class="text-4xl md:text-6xl mt-16">There and Back Again</h1> <!-- Increased top margin -->
-            <h2 class="text-2xl md:text-3xl mt-2">A Chronological and Geographic Analysis of Bilbo Baggins's Journey</h2>
+            <h1 class="text-4xl md:text-6xl mt-16" data-key="mainTitle"></h1>
+            <h2 class="text-2xl md:text-3xl mt-2" data-key="subTitle"></h2>
         </header>
 
-        <!-- Section 1: The Measure of an Adventure -->
         <section class="mb-16 card p-6 md:p-8">
-            <h3 class="text-2xl md:text-3xl mb-6 text-center">The Measure of an Adventure: Totals in Time and Distance</h3>
+            <h3 class="text-2xl md:text-3xl mb-6 text-center" data-key="section1Title"></h3>
             <div class="text-lg leading-relaxed">
-                <p>The tale of Bilbo Baggins's journey to the Lonely Mountain, as chronicled by J.R.R. Tolkien in <em>The Hobbit</em>, is an adventure of considerable scope, measurable in both time and distance. A precise understanding of these metrics provides not only a factual answer to the question of the journey's length but also offers a foundational context for appreciating the narrative's unique pacing and character. </p>
+                <p data-key="section1Para1"></p>
                 <div class="text-right mt-4">
-                    <button class="read-more-button" data-section="introduction">Read Full Introduction</button>
+                    <button class="read-more-button" data-section="introduction" data-key="readMoreIntro"></button>
                 </div>
             </div>
             
             <div class="overflow-x-auto my-8">
-                <h4 class="text-xl mb-4">The Quest of Erebor at a Glance</h4>
+                <h4 class="text-xl mb-4" data-key="table1Title"></h4>
                 <table>
                     <thead>
-                        <tr><th>Metric</th><th>Value</th></tr>
+                        <tr><th data-key="table1Header1"></th><th data-key="table1Header2"></th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>Total Duration (There and Back Again)</td><td>Approx. <strong>14 months</strong> (April 27, 2941 - June 22, 2942)</td></tr>
-                        <tr><td>Outward Journey Duration (Bag End to Erebor)</td><td>Approx. <strong>172 days</strong></td></tr>
-                        <tr><td>Outward Journey Distance</td><td>Approx. <strong>950 miles</strong> (1529 km)</td></tr>
-                        <tr><td>Average Daily Pace (Outward)</td><td>Approx. <strong>5.52 miles/day</strong> (8.88 km/day)</td></tr>
+                        <tr><td data-key="table1Row1Col1"></td><td data-key="table1Row1Col2"></td></tr>
+                        <tr><td data-key="table1Row2Col1"></td><td data-key="table1Row2Col2"></td></tr>
+                        <tr><td data-key="table1Row3Col1"></td><td data-key="table1Row3Col2"></td></tr>
+                        <tr><td data-key="table1Row4Col1"></td><td data-key="table1Row4Col2"></td></tr>
                     </tbody>
                 </table>
             </div>
             <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="text-lg leading-relaxed">
-                     <h4 class="text-xl mb-4">The Episodic Pace</h4>
-                    <p>A journey of <strong>950 miles</strong> (1529 km) completed in <strong>172 days</strong> yields an average pace of just over <strong>5.5 miles per day</strong> (8.88 km/day). This rate of travel is remarkably slow for a determined party. This discrepancy cannot be explained by slow walking alone; it logically points to a journey composed of far more than just continuous travel. The low average pace is a mathematical indicator that the quest was episodic, punctuated by significant interruptions, long periods of rest, and unforeseen delays. This understanding reframes the entire narrative, shifting it from a simple A-to-B trek to a more complex, stop-and-start experience where the time spent stationary was as significant as the time spent in motion.</p>
+                     <h4 class="text-xl mb-4" data-key="section1PaceTitle"></h4>
+                    <p data-key="section1PacePara"></p>
                 </div>
                 <div class="chart-container">
                     <canvas id="paceChart"></canvas>
@@ -176,91 +215,87 @@
             </div>
         </section>
 
-        <!-- Section 2: The Outward Bound Road -->
         <section class="mb-16">
-            <h3 class="text-2xl md:text-3xl text-center mb-12">The Outward Bound Road: A Detailed Itinerary</h3>
+            <h3 class="text-2xl md:text-3xl text-center mb-12" data-key="section2Title"></h3>
             
             <div class="space-y-4">
                 <div class="card p-6">
-                    <h4 class="text-xl font-bold">1. The Call to Adventure and the First Steps (April 26 - June 3, 2941)</h4>
+                    <h4 class="text-xl font-bold" data-key="stage1Title"></h4>
                     <div class="text-lg leading-relaxed">
-                        <p>The story begins not on the road, but with the "Unexpected Party" at Bag End on the evening of April 26, T.A. 2941. After a night of songs and talk of dragons, Bilbo rushes out on the morning of April 27 to join the Company of Thorin Oakenshield.</p>
+                        <p data-key="stage1Para"></p>
                         <div class="text-right mt-4">
-                            <button class="read-more-button" data-section="stage1">Read Full Details</button>
+                            <button class="read-more-button" data-section="stage1" data-key="readMoreDetails"></button>
                         </div>
                     </div>
                 </div>
 
                 <div class="card p-6">
-                    <h4 class="text-xl font-bold">2. A Fortnight's Respite in Rivendell (June 4 - Mid-year's Day, 2941)</h4>
+                    <h4 class="text-xl font-bold" data-key="stage2Title"></h4>
                     <div class="text-lg leading-relaxed">
-                        <p>After the hardships of the road, the company found sanctuary in the hidden valley of Rivendell. Here, they were hosted by Elrond, whose wisdom proved invaluable. By examining Thrór's map, Elrond revealed the secret moon-letters: "Stand by the grey stone when the thrush knocks...".</p>
+                        <p data-key="stage2Para"></p>
                         <div class="text-right mt-4">
-                            <button class="read-more-button" data-section="stage2">Read Full Details</button>
+                            <button class="read-more-button" data-section="stage2" data-key="readMoreDetails"></button>
                         </div>
                     </div>
                 </div>
                 
                 <div class="card p-6">
-                    <h4 class="text-xl font-bold">3. Over the High Pass and Under the Mountains (Mid-year's Day - July, 2941)</h4>
+                    <h4 class="text-xl font-bold" data-key="stage3Title"></h4>
                     <div class="text-lg leading-relaxed">
-                        <p>Leaving the comfort of Rivendell, the company set out to cross the formidable Misty Mountains. They were captured by goblins, and it was during this flight that Bilbo was knocked unconscious and separated from the others.</p>
+                        <p data-key="stage3Para"></p>
                         <div class="text-right mt-4">
-                            <button class="read-more-button" data-section="stage3">Read Full Details</button>
+                            <button class="read-more-button" data-section="stage3" data-key="readMoreDetails"></button>
                         </div>
                     </div>
                 </div>
 
                 <div class="card p-6">
-                    <h4 class="text-xl font-bold">4. Into the Shadow of Mirkwood (August - September, 2941)</h4>
+                    <h4 class="text-xl font-bold" data-key="stage4Title"></h4>
                      <div class="text-lg leading-relaxed">
-                        <p>The company enters Mirkwood without Gandalf. Their journey through Mirkwood was an ordeal of hunger, thirst, and fear. After straying from the path, the dwarves were captured by Giant Spiders. It was Bilbo who, using his wits and his magic ring, managed to rescue them, slaying his first foe and naming his small sword "Sting." No sooner were they free from the spiders than they were captured again, this time by the Wood-elves of King Thranduil, who were wary of strangers in their realm. This period of captivity was another substantial delay in their quest. Analysis of the timeline suggests the dwarves were held prisoner in the Elvenking's halls for a period of <strong>26 days</strong>.</p>
-                        </div>
+                        <p data-key="stage4Para"></p>
+                     </div>
                 </div>
                 
                 <div class="card p-6">
-                    <h4 class="text-xl font-bold">5. Down the Forest River to Lake-town (September - October, 2941)</h4>
+                    <h4 class="text-xl font-bold" data-key="stage5Title"></h4>
                     <div class="text-lg leading-relaxed">
-                        <p>Bilbo devises a daring escape in barrels, arriving at Lake-town on his 51st birthday, September 22. After a <strong>two-week</strong> rest, they reach the Lonely Mountain and find the secret door on Durin's Day.</p>
+                        <p data-key="stage5Para"></p>
                         <div class="text-right mt-4">
-                            <button class="read-more-button" data-section="stage5">Read Full Details</button>
+                            <button class="read-more-button" data-section="stage5" data-key="readMoreDetails"></button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3: The Aftermath -->
         <section class="mb-16 card p-6 md:p-8">
-            <h3 class="text-2xl md:text-3xl mb-6 text-center">The Aftermath: Siege, Battle, and a King's Funeral <br> (October - November, 2941)</h3>
+            <h3 class="text-2xl md:text-3xl mb-6 text-center" data-key="section3Title"></h3>
             <div class="text-lg leading-relaxed">
-                <p>The arrival at the Lonely Mountain began the quest's climactic phase. After Smaug attacked Lake-town and was slain by Bard on October 1, 2941, Thorin succumbed to "dragon-sickness," refusing to share the hoard and leading to a tense siege.</p>
+                <p data-key="section3Para"></p>
                 <div class="text-right mt-4">
-                    <button class="read-more-button" data-section="aftermath">Read Full Details</button>
+                    <button class="read-more-button" data-section="aftermath" data-key="readMoreDetails"></button>
                 </div>
             </div>
         </section>
 
-        <!-- Section 4: The Journey Home -->
         <section class="mb-16 card p-6 md:p-8">
-            <h3 class="text-2xl md:text-3xl mb-6 text-center">The Journey Home: There and Back Again <br> (Late 2941 - June 22, 2942)</h3>
+            <h3 class="text-2xl md:text-3xl mb-6 text-center" data-key="section4Title"></h3>
             <div class="text-lg leading-relaxed">
-                <p>The return journey stands in stark contrast to the outward trek. Bilbo and Gandalf traveled a safer route north of Mirkwood and spent the entire winter as guests of Beorn, not departing until the spring of 2942.</p>
+                <p data-key="section4Para"></p>
                 <div class="text-right mt-4">
-                    <button class="read-more-button" data-section="journeyHome">Read Full Details</button>
+                    <button class="read-more-button" data-section="journeyHome" data-key="readMoreDetails"></button>
                 </div>
             </div>
         </section>
         
-        <!-- Section 6: Comparative Analysis -->
         <section class="mb-16">
-            <h3 class="text-2xl md:text-3xl text-center mb-12">A Comparative Analysis: Bilbo's Quest vs. Frodo's</h3>
+            <h3 class="text-2xl md:text-3xl text-center mb-12" data-key="section6Title"></h3>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                  <div class="text-lg leading-relaxed card p-6">
-                    <h4 class="text-xl mb-4">Key Statistical Differences and Their Narrative Implications</h4>
-                    <p>To fully appreciate the scale of Bilbo's journey, it is useful to compare it to Frodo's. The statistical differences are stark and reveal the different narrative tones. Frodo's quest was a desperate flight, while Bilbo's was a treasure expedition.</p>
+                    <h4 class="text-xl mb-4" data-key="section6SubTitle"></h4>
+                    <p data-key="section6Para"></p>
                     <div class="text-right mt-4">
-                        <button class="read-more-button" data-section="comparison">Read Full Analysis</button>
+                        <button class="read-more-button" data-section="comparison" data-key="readFullAnalysis"></button>
                     </div>
                 </div>
                 <div class="chart-container">
@@ -268,45 +303,42 @@
                 </div>
             </div>
             <div class="overflow-x-auto mt-12 card p-6">
-                <h4 class="text-xl mb-4">Comparative Journey Metrics: Bilbo vs. Frodo</h4>
+                <h4 class="text-xl mb-4" data-key="table2Title"></h4>
                 <table>
-                    <thead><tr><th>Metric</th><th>Bilbo's Journey (Outward)</th><th>Frodo's Journey (Outward)</th></tr></thead>
+                    <thead><tr><th data-key="table2Header1"></th><th data-key="table2Header2"></th><th data-key="table2Header3"></th></tr></thead>
                     <tbody>
-                        <tr><td><strong>Total Distance to Destination</strong></td><td>~<strong>950 miles</strong> (1529 km)</td><td>~<strong>1,800 miles</strong> (2897 km)</td></tr>
-                        <tr><td><strong>Total Duration to Destination</strong></td><td><strong>172 days</strong></td><td><strong>185 days</strong></td></tr>
-                        <tr><td><strong>Avg. Daily Pace to Rivendell</strong></td><td><strong>10.17 miles/day</strong> (16.37 km/day)</td><td><strong>16.9 miles/day</strong> (27.2 km/day)</td></tr>
+                        <tr><td data-key="table2Row1Col1"></td><td data-key="table2Row1Col2"></td><td data-key="table2Row1Col3"></td></tr>
+                        <tr><td data-key="table2Row2Col1"></td><td data-key="table2Row2Col2"></td><td data-key="table2Row2Col3"></td></tr>
+                        <tr><td data-key="table2Row3Col1"></td><td data-key="table2Row3Col2"></td><td data-key="table2Row3Col3"></td></tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- Section 7: Conclusion -->
         <section class="card p-6 md:p-8">
-            <h3 class="text-2xl md:text-3xl mb-6 text-center">Conclusion: The True Meaning of "An Adventure"</h3>
+            <h3 class="text-2xl md:text-3xl mb-6 text-center" data-key="conclusionTitle"></h3>
              <div class="text-lg leading-relaxed">
-                <p class="mt-4 mb-4">The journey of Bilbo Baggins was a grand undertaking of approximately <strong>14 months</strong> and nearly <strong>2,000 miles</strong> (3219 km). Yet, to focus solely on these numbers is to miss their deeper significance. The duration and distance are the quantitative expression of the story's qualitative nature.</p>
-                <p class="mt-4 mb-4">Ultimately, the most important measure of Bilbo's journey is not in miles or days, but in the growth of its protagonist. The time spent on the road and the distance crossed were the necessary crucible for his transformation. He left Bag End a respectable, comfort-loving hobbit, a "Baggins" through and through. He returned a worldly, courageous, and profoundly changed individual, one who had conversed with a dragon, tricked a king, and played a part in a great battle. The length and episodic structure of the journey were the conditions perfectly calibrated by the author to awaken the latent "Took" side of his character, fulfilling the promise that Gandalf had seen in him from the very beginning. The journey was long enough, and far enough, to take Bilbo Baggins there and back again, not just to a mountain of gold, but to a new version of himself.</p>
+                <p class="mt-4 mb-4" data-key="conclusionPara1"></p>
+                <p class="mt-4 mb-4" data-key="conclusionPara2"></p>
             </div>
         </section>
 
     </main>
 
-    <!-- Disclaimer Section -->
     <section class="container mx-auto p-4 md:p-8 max-w-5xl mb-12">
         <div class="card p-6 text-center text-sm text-gray-700">
-            <p>This research, which forms the basis of this page, was generated by <strong>Gemini 2.5 PRO</strong> through deep research.</p>
-            <p>As such, it may contain inaccuracies.</p>
-            <p class="mt-2">If you wish to delve into the full research document, you can do so by clicking this <a href="https://docs.google.com/document/d/103dut6ilJKpIeg0kEsXuEdc-VHoTaQb3NWkJYXMM-5E/edit?usp=sharing" target="_blank" class="text-blue-600 hover:underline font-bold">link</a>.</p>
+            <p data-key="disclaimer1"></p>
+            <p data-key="disclaimer2"></p>
+            <p class="mt-2" data-key="disclaimer3"></p>
         </div>
     </section>
 
     <footer class="text-center p-8 mt-12">
         <div class="rune-border">
-             <span>ᛞᚢᚱᛁᚾ᛫ᚠᚩᛚᚳ᛫ᚢᚾᛞᛖᚱ᛫ᚦᛖ᛫ᛗᚩᚢᚾᛏᚪᛁᚾ᛫ᚱᛖᛏᚢᚱᚱᚾᛖᛞ᛫ᛏᚩ᛫ᛖᚱᛖᛒᚩᚱ᛫ᛚᚪᛋᛏ᛫ᚻᚩᛗᛖ᛫ᚩᚠ᛫ᛏᚻᚱᚪᛁᚾ</span>
+              <span>ᛞᚢᚱᛁᚾ᛫ᚠᚩᛚᚳ᛫ᚢᚾᛞᛖᚱ᛫ᚦᛖ᛫ᛗᚩᚢᚾᛏᚪᛁᚾ᛫ᚱᛖᛏᚢᚱᚱᚾᛖᛞ᛫ᛏᚩ᛫ᛖᚱᛖᛒᚩᚱ᛫ᛚᚪᛋᛏ᛫ᚻᚩᛗᛖ᛫ᚩᚠ᛫ᛏᚻᚱᚪᛁᚾ</span>
         </div>
     </footer>
 
-    <!-- Modal for Full Text -->
     <div id="contentModal" class="fixed inset-0 hidden items-center justify-center p-4 z-50">
         <div class="card p-6 md:p-8 max-w-2xl w-full relative">
             <div class="rune-border mb-4">
@@ -315,8 +347,7 @@
             <button id="closeModal" class="absolute top-4 right-4 text-2xl font-bold text-gray-600 hover:text-gray-900">&times;</button>
             <h3 id="modalTitle" class="text-2xl md:text-3xl mb-4 text-center">Details</h3>
             <div id="modalContent" class="text-lg leading-relaxed max-h-[60vh] overflow-y-auto">
-                <!-- Content will be injected here -->
-            </div>
+                </div>
              <div class="rune-border mt-4">
                  <span>ᛋᚳᛖᚪᛚ᛫ᚦᛖᚪᚻ᛫ᛗᚪᚾᚾᚪ</span>
             </div>
@@ -324,91 +355,262 @@
     </div>
 
     <script>
-        // --- Full Text Content Store ---
-        const fullTexts = {
-            introduction: `
-                <p class="mb-6">The entire saga, from the moment Bilbo Baggins stepped out of his front door at Bag End to his eventual, and quite surprising, return, spanned approximately <strong>one year and two months</strong>. The Quest of Erebor commenced in the year 2941 of the Third Age (T.A.) and concluded with Bilbo's homecoming in T.A. 2942. More specifically, the adventure began with Bilbo's hasty departure on the morning of April 27, 2941, and officially ended when he arrived back at his own hobbit-hole on June 22, 2942, completing the full circle of "there and back again".</p>
-                <p class="mb-6">The physical distance covered on this quest has been the subject of meticulous study, most authoritatively by the cartographer Karen Wynn Fonstad in her seminal work, <em>The Atlas of Middle-earth</em>. Her detailed analysis, based on Tolkien's maps and textual descriptions, has become the standard reference for the geography of Middle-earth. According to analyses derived from Fonstad's work, the outward journey from Hobbiton in the Shire to the Lonely Mountain (Erebor) covered a distance of approximately <strong>950 to 967 miles</strong> (1529 to 1556 km). While slight variations exist between different scholarly interpretations of Fonstad's data, the figure of <strong>950 miles</strong> (1529 km) for the outward journey, as calculated by the comprehensive LOTRProject, serves as a reliable and consistent metric. The return journey, though following a partially different and longer route, involved traversing a comparable distance, with the final leg from Rivendell back to Bag End alone measuring <strong>397 miles</strong> (639 km).</p>`,
-            stage1: `
-                <p class="mb-4">The company's first major leg of the journey took them east out of the familiar lands of the Shire and into the wilds of Eriador. Their path led them into the Trollshaws, where they had their first perilous encounter with the three stone-trolls, Tom, Bert, and William. Only Gandalf's clever imitation of their voices, which kept them arguing until the dawn turned them to stone, saved the dwarves from becoming a meal. This initial stage of the journey, from Bag End to the sanctuary of Rivendell, covered a distance of <strong>397 miles</strong> (639 km) and took the company <strong>39 days</strong> to complete. During this period of active travel, their pace was a more respectable, though still somewhat leisurely, average of <strong>10.17 miles per day</strong> (16.37 km/day).</p>`,
-            stage2: `
-                <p class="mb-4">This was no mere overnight stop. The company's stay in Rivendell was a significant period of rest and recuperation. They arrived in early June and did not depart until Mid-year's Day, the day between June and July in the Shire calendar. Detailed timeline analysis indicates this respite lasted for approximately <strong>29 days</strong>. This extended pause highlights the journey's nature: it was not a desperate flight but a planned expedition that allowed for strategic delays to rest, gather information, and prepare for the more dangerous road ahead.</p>`,
-            stage3: `
-                <p class="mb-4">It was here, on July 1, 2941, that the most pivotal event of the journey—and indeed, one of the most significant events of the Third Age—occurred: Bilbo stumbled upon a small, cold ring and put it in his pocket. Shortly after, he encountered the creature Gollum. In the famous Riddle Game that followed, Bilbo ultimately stumped Gollum and, by using the newfound power of the Ring to become invisible, managed to escape the creature's clutches and the goblin tunnels. After rejoining his companions, who were being harried by goblins and their Warg allies, the entire company was saved from certain doom by the timely intervention of the Great Eagles, who bore them away from the mountains.</p>`,
-            stage4: `
-                <p class="mb-4">Their journey through Mirkwood was an ordeal of hunger, thirst, and fear. After straying from the path, the dwarves were captured by Giant Spiders. It was Bilbo who, using his wits and his magic ring, managed to rescue them, slaying his first foe and naming his small sword "Sting." No sooner were they free from the spiders than they were captured again, this time by the Wood-elves of King Thranduil, who were wary of strangers in their realm. This period of captivity was another substantial delay in their quest. Analysis of the timeline suggests the dwarves were held prisoner in the Elvenking's halls for a period of <strong>26 days</strong>.</p>`,
-            stage5: `
-                <p class="mb-4">Bilbo devises a daring escape in barrels, arriving at Lake-town on his 51st birthday, September 22. After a <strong>two-week</strong> rest, they reach the Lonely Mountain and find the secret door on Durin's Day.</p>`,
-            aftermath: `
-                <h4 class="text-xl mt-6 mb-4">The Battle of Five Armies</h4>
-                <p class="mb-4">Hoping to avert a needless war and force Thorin to negotiate, Bilbo took matters into his own hands. He secretly crept out of the mountain and delivered the Arkenstone—the Heart of the Mountain and the heirloom Thorin prized above all else—to Bard and Thranduil, to be used as a bargaining chip. Thorin was enraged by this act, which he saw as treason. The situation escalated with the arrival of a relief army of <strong>five hundred dwarves</strong> from the Iron Hills, led by Thorin's cousin, Dáin Ironfoot. A battle between the three armies of Dwarves, Men, and Elves seemed inevitable. At this critical moment, Gandalf reappeared, warning of a far greater danger: a massive army of Goblins from the Misty Mountains, led by Bolg, son of Azog, marching upon them with their Warg allies. This new threat forced the would-be enemies to unite. The resulting conflict, fought in the valley of Dale on October 10, 2941, became known as the Battle of Five Armies. The battle raged fiercely, and the alliance of Free Peoples was nearly overwhelmed until the tide was turned by the sudden arrival of the Great Eagles and, finally, Beorn, who entered the fray in his great bear form and crushed the goblin-chieftain Bolg.</p>
-                <h4 class="text-xl mt-6 mb-4">The New Reign</h4>
-                <p>The victory was decisive but came at a great cost. Thorin Oakenshield had been mortally wounded in the fighting. In his final moments, he reconciled with Bilbo, asking forgiveness for his harsh words and parting in friendship. His nephews, the young dwarves Fíli and Kíli, were also slain defending him. Thorin was laid to rest deep within the mountain, with the Arkenstone upon his breast. With Thorin's line ended, his cousin Dáin Ironfoot became the new King Under the Mountain. A new era of peace and prosperity began, with treasure being shared fairly, the town of Dale being rebuilt by Bard and his people, and good relations established between the Dwarves, Men, and Elves of the North.</p>`,
-            journeyHome: `
-                <h4 class="text-xl mt-6 mb-4">A Final Farewell and an Unwelcome Homecoming</h4>
-                <p class="mb-4">They arrived back in Rivendell on May 1, 2942, where they stayed for a while with Elrond, resting and sharing tales of their adventures. After their pleasant stay in Rivendell, Bilbo traveled the final leg of his journey, covering the <strong>397 miles</strong> (639 km) back to the Shire. He arrived at Bag End on June 22, 2942, only to find a crowd of hobbits on his lawn and his possessions being auctioned off. Having been gone for over <strong>a year</strong>, he had been officially presumed dead by the authorities in Hobbiton. After a great deal of trouble and expense buying back his own furniture, and some legal wrangling, Bilbo was finally reinstated as being alive, though he had rather lost his reputation for respectability. This chaotic scene marked the true, and somewhat comical, end of his great adventure.</p>
-                <p>The structure of the return journey serves as a narrative foil to the outward quest, highlighting the story's themes of change and homecoming. The outward journey was defined by a sense of urgency, constant danger, and a clear, time-sensitive objective: to reach the Lonely Mountain by Durin's Day. The path was fraught with immediate threats, from trolls and goblins to giant spiders and a fire-breathing dragon. In contrast, the return journey was characterized by a leisurely pace, safety, and reflection. The route was explicitly chosen to be less perilous, bypassing Mirkwood entirely. There was no deadline, no pressing need to rush. The most significant block of time on the return was not a hostile imprisonment but a voluntary and peaceful stay with an ally, Beorn, for an entire season. This thematic contrast underscores Bilbo's transformation. He left the Shire as a flustered, comfort-loving hobbit on a frightening quest; he returned a seasoned, wealthy, and worldly adventurer who could afford to take his time, enjoy the hospitality of powerful friends, and travel at his own pace. The very nature of his journey had changed because he himself had changed.</p>`,
-            comparison: `
-                <p class="mt-4 mb-4">Three core factors account for the disparity: the urgency of the mission, the composition of the company, and the ultimate purpose of the journey. First, the element of urgency was vastly different. Frodo's was a flight for his life and for the fate of the world, relentlessly hunted by the Nazgûl. Bilbo's quest, while dangerous, was fundamentally a treasure expedition. Second, the composition of the company played a critical role. Bilbo traveled with a large party of <strong>十三 dwarves</strong>, while Frodo's Fellowship was more nimble and guided by Aragorn. Finally, the fundamental purpose of each mission shaped every decision. Bilbo's quest was one of reclamation; Frodo's was one of renunciation and destruction. The numbers are a direct reflection of the narrative's soul: one is an adventure story, the other is an epic of war and sacrifice.</p>`,
-            conclusion: `
-                <p class="mt-4 mb-4">Ultimately, the most important measure of Bilbo's journey is not in miles or days, but in the growth of its protagonist. The time spent on the road and the distance crossed were the necessary crucible for his transformation. He left Bag End a respectable, comfort-loving hobbit, a "Baggins" through and through. He returned a worldly, courageous, and profoundly changed individual, one who had conversed with a dragon, tricked a king, and played a part in a great battle. The length and episodic structure of the journey were the conditions perfectly calibrated by the author to awaken the latent "Took" side of his character, fulfilling the promise that Gandalf had seen in him from the very beginning. The journey was long enough, and far enough, to take Bilbo Baggins there and back again, not just to a mountain of gold, but to a new version of himself.</p>`
+        // --- DATA STORE FOR TRANSLATIONS ---
+        const translations = {
+            // English (Source)
+            en: {
+                docTitle: "There and Back Again: A Data-Driven Journey",
+                mainTitle: "There and Back Again",
+                subTitle: "A Chronological and Geographic Analysis of Bilbo Baggins's Journey",
+                readMoreIntro: "Read Full Introduction",
+                readMoreDetails: "Read Full Details",
+                readFullAnalysis: "Read Full Analysis",
+                section1Title: "The Measure of an Adventure: Totals in Time and Distance",
+                section1Para1: "The tale of Bilbo Baggins's journey to the Lonely Mountain, as chronicled by J.R.R. Tolkien in <em>The Hobbit</em>, is an adventure of considerable scope, measurable in both time and distance. A precise understanding of these metrics provides not only a factual answer to the question of the journey's length but also offers a foundational context for appreciating the narrative's unique pacing and character.",
+                table1Title: "The Quest of Erebor at a Glance",
+                table1Header1: "Metric",
+                table1Header2: "Value",
+                table1Row1Col1: "Total Duration (There and Back Again)",
+                table1Row1Col2: "Approx. <strong>14 months</strong> (April 27, 2941 - June 22, 2942)",
+                table1Row2Col1: "Outward Journey Duration (Bag End to Erebor)",
+                table1Row2Col2: "Approx. <strong>172 days</strong>",
+                table1Row3Col1: "Outward Journey Distance",
+                table1Row3Col2: "Approx. <strong>950 miles</strong> (1529 km)",
+                table1Row4Col1: "Average Daily Pace (Outward)",
+                table1Row4Col2: "Approx. <strong>5.52 miles/day</strong> (8.88 km/day)",
+                section1PaceTitle: "The Episodic Pace",
+                section1PacePara: "A journey of <strong>950 miles</strong> (1529 km) completed in <strong>172 days</strong> yields an average pace of just over <strong>5.5 miles per day</strong> (8.88 km/day). This rate of travel is remarkably slow for a determined party. This discrepancy cannot be explained by slow walking alone; it logically points to a journey composed of far more than just continuous travel. The low average pace is a mathematical indicator that the quest was episodic, punctuated by significant interruptions, long periods of rest, and unforeseen delays. This understanding reframes the entire narrative, shifting it from a simple A-to-B trek to a more complex, stop-and-start experience where the time spent stationary was as significant as the time spent in motion.",
+                section2Title: "The Outward Bound Road: A Detailed Itinerary",
+                stage1Title: "1. The Call to Adventure and the First Steps (April 26 - June 3, 2941)",
+                stage1Para: "The story begins not on the road, but with the \"Unexpected Party\" at Bag End on the evening of April 26, T.A. 2941. After a night of songs and talk of dragons, Bilbo rushes out on the morning of April 27 to join the Company of Thorin Oakenshield.",
+                stage2Title: "2. A Fortnight's Respite in Rivendell (June 4 - Mid-year's Day, 2941)",
+                stage2Para: "After the hardships of the road, the company found sanctuary in the hidden valley of Rivendell. Here, they were hosted by Elrond, whose wisdom proved invaluable. By examining Thrór's map, Elrond revealed the secret moon-letters: \"Stand by the grey stone when the thrush knocks...\".",
+                stage3Title: "3. Over the High Pass and Under the Mountains (Mid-year's Day - July, 2941)",
+                stage3Para: "Leaving the comfort of Rivendell, the company set out to cross the formidable Misty Mountains. They were captured by goblins, and it was during this flight that Bilbo was knocked unconscious and separated from the others.",
+                stage4Title: "4. Into the Shadow of Mirkwood (August - September, 2941)",
+                stage4Para: "The company enters Mirkwood without Gandalf. Their journey through Mirkwood was an ordeal of hunger, thirst, and fear. After straying from the path, the dwarves were captured by Giant Spiders. It was Bilbo who, using his wits and his magic ring, managed to rescue them, slaying his first foe and naming his small sword \"Sting.\" No sooner were they free from the spiders than they were captured again, this time by the Wood-elves of King Thranduil, who were wary of strangers in their realm. This period of captivity was another substantial delay in their quest. Analysis of the timeline suggests the dwarves were held prisoner in the Elvenking's halls for a period of <strong>26 days</strong>.",
+                stage5Title: "5. Down the Forest River to Lake-town (September - October, 2941)",
+                stage5Para: "Bilbo devises a daring escape in barrels, arriving at Lake-town on his 51st birthday, September 22. After a <strong>two-week</strong> rest, they reach the Lonely Mountain and find the secret door on Durin's Day.",
+                section3Title: "The Aftermath: Siege, Battle, and a King's Funeral <br> (October - November, 2941)",
+                section3Para: "The arrival at the Lonely Mountain began the quest's climactic phase. After Smaug attacked Lake-town and was slain by Bard on October 1, 2941, Thorin succumbed to \"dragon-sickness,\" refusing to share the hoard and leading to a tense siege.",
+                section4Title: "The Journey Home: There and Back Again <br> (Late 2941 - June 22, 2942)",
+                section4Para: "The return journey stands in stark contrast to the outward trek. Bilbo and Gandalf traveled a safer route north of Mirkwood and spent the entire winter as guests of Beorn, not departing until the spring of 2942.",
+                section6Title: "A Comparative Analysis: Bilbo's Quest vs. Frodo's",
+                section6SubTitle: "Key Statistical Differences and Their Narrative Implications",
+                section6Para: "To fully appreciate the scale of Bilbo's journey, it is useful to compare it to Frodo's. The statistical differences are stark and reveal the different narrative tones. Frodo's quest was a desperate flight, while Bilbo's was a treasure expedition.",
+                table2Title: "Comparative Journey Metrics: Bilbo vs. Frodo",
+                table2Header1: "Metric",
+                table2Header2: "Bilbo's Journey (Outward)",
+                table2Header3: "Frodo's Journey (Outward)",
+                table2Row1Col1: "<strong>Total Distance to Destination</strong>",
+                table2Row1Col2: "~<strong>950 miles</strong> (1529 km)",
+                table2Row1Col3: "~<strong>1,800 miles</strong> (2897 km)",
+                table2Row2Col1: "<strong>Total Duration to Destination</strong>",
+                table2Row2Col2: "<strong>172 days</strong>",
+                table2Row2Col3: "<strong>185 days</strong>",
+                table2Row3Col1: "<strong>Avg. Daily Pace to Rivendell</strong>",
+                table2Row3Col2: "<strong>10.17 miles/day</strong> (16.37 km/day)",
+                table2Row3Col3: "<strong>16.9 miles/day</strong> (27.2 km/day)",
+                conclusionTitle: "Conclusion: The True Meaning of \"An Adventure\"",
+                conclusionPara1: "The journey of Bilbo Baggins was a grand undertaking of approximately <strong>14 months</strong> and nearly <strong>2,000 miles</strong> (3219 km). Yet, to focus solely on these numbers is to miss their deeper significance. The duration and distance are the quantitative expression of the story's qualitative nature.",
+                conclusionPara2: "Ultimately, the most important measure of Bilbo's journey is not in miles or days, but in the growth of its protagonist. He left Bag End a respectable, comfort-loving hobbit, a \"Baggins\" through and through. He returned a worldly, courageous, and profoundly changed individual. The length and episodic structure of the journey were the conditions perfectly calibrated by the author to awaken the latent \"Took\" side of his character, fulfilling the promise that Gandalf had seen in him from the very beginning. The journey was long enough, and far enough, to take Bilbo Baggins there and back again, not just to a mountain of gold, but to a new version of himself.",
+                disclaimer1: "This research, which forms the basis of this page, was generated by <strong>Gemini 2.5 PRO</strong> through deep research.",
+                disclaimer2: "As such, it may contain inaccuracies.",
+                disclaimer3: "If you wish to delve into the full research document, you can do so by clicking this <a href=\"https://docs.google.com/document/d/103dut6ilJKpIeg0kEsXuEdc-VHoTaQb3NWkJYXMM-5E/edit?usp=sharing\" target=\"_blank\" class=\"text-blue-600 hover:underline font-bold\">link</a>.",
+                modalDefaultTitle: "Details",
+                fullTexts: {
+                    introduction: `<p class="mb-6">The entire saga, from the moment Bilbo Baggins stepped out of his front door at Bag End to his eventual, and quite surprising, return, spanned approximately <strong>one year and two months</strong>. The Quest of Erebor commenced in the year 2941 of the Third Age (T.A.) and concluded with Bilbo's homecoming in T.A. 2942. More specifically, the adventure began with Bilbo's hasty departure on the morning of April 27, 2941, and officially ended when he arrived back at his own hobbit-hole on June 22, 2942, completing the full circle of "there and back again".</p> <p class="mb-6">The physical distance covered on this quest has been the subject of meticulous study. According to analyses derived from Karen Wynn Fonstad's <em>The Atlas of Middle-earth</em>, the outward journey from Hobbiton in the Shire to the Lonely Mountain (Erebor) covered a distance of approximately <strong>950 miles</strong> (1529 km). The return journey, though following a partially different and longer route, involved traversing a comparable distance, with the final leg from Rivendell back to Bag End alone measuring <strong>397 miles</strong> (639 km).</p>`,
+                    stage1: `<p class="mb-4">The company's first major leg of the journey took them east out of the familiar lands of the Shire and into the wilds of Eriador. Their path led them into the Trollshaws, where they had their first perilous encounter with the three stone-trolls, Tom, Bert, and William. Only Gandalf's clever imitation of their voices, which kept them arguing until the dawn turned them to stone, saved the dwarves from becoming a meal. This initial stage of the journey, from Bag End to the sanctuary of Rivendell, covered a distance of <strong>397 miles</strong> (639 km) and took the company <strong>39 days</strong> to complete. During this period of active travel, their pace was a more respectable, though still somewhat leisurely, average of <strong>10.17 miles per day</strong> (16.37 km/day).</p>`,
+                    stage2: `<p class="mb-4">This was no mere overnight stop. The company's stay in Rivendell was a significant period of rest and recuperation. They arrived in early June and did not depart until Mid-year's Day, the day between June and July in the Shire calendar. Detailed timeline analysis indicates this respite lasted for approximately <strong>29 days</strong>. This extended pause highlights the journey's nature: it was not a desperate flight but a planned expedition that allowed for strategic delays to rest, gather information, and prepare for the more dangerous road ahead.</p>`,
+                    stage3: `<p class="mb-4">It was here, on July 1, 2941, that the most pivotal event of the journey—and indeed, one of the most significant events of the Third Age—occurred: Bilbo stumbled upon a small, cold ring and put it in his pocket. Shortly after, he encountered the creature Gollum. In the famous Riddle Game that followed, Bilbo ultimately stumped Gollum and, by using the newfound power of the Ring to become invisible, managed to escape the creature's clutches and the goblin tunnels. After rejoining his companions, who were being harried by goblins and their Warg allies, the entire company was saved from certain doom by the timely intervention of the Great Eagles, who bore them away from the mountains.</p>`,
+                    stage5: `<p class="mb-4">Bilbo devises a daring escape, packing the dwarves into empty wine barrels and floating them down the Forest River to Lake-town. They arrived on September 22, which coincidentally was Bilbo's 51st birthday. The Men of Lake-town, remembering the old prophecies of the King under the Mountain's return, welcomed the company with great celebration. After a rest of approximately <strong>two weeks</strong> to recover their strength and gather supplies, they finally set out for the last leg of their journey to the Lonely Mountain, finding the secret door on Durin's Day.</p>`,
+                    aftermath: `<h4 class="text-xl mt-6 mb-4">The Battle of Five Armies</h4> <p class="mb-4">Hoping to avert a needless war, Bilbo secretly delivered the Arkenstone to Bard and Thranduil to be used as a bargaining chip. Thorin was enraged by this act, which he saw as treason. The situation escalated with the arrival of Dáin Ironfoot's relief army of dwarves. At this critical moment, Gandalf reappeared, warning of a greater danger: a massive army of Goblins and Wargs from the Misty Mountains, led by Bolg, son of Azog. This new threat forced the would-be enemies to unite. The resulting conflict, fought in the valley of Dale on October 10, 2941, became known as the Battle of Five Armies. The alliance was nearly overwhelmed until the tide was turned by the sudden arrival of the Great Eagles and Beorn, who crushed the goblin-chieftain Bolg.</p> <h4 class="text-xl mt-6 mb-4">The New Reign</h4> <p>The victory was decisive but costly. Thorin Oakenshield had been mortally wounded. In his final moments, he reconciled with Bilbo. His nephews, Fíli and Kíli, were also slain. Thorin was laid to rest deep within the mountain, with the Arkenstone upon his breast. His cousin Dáin Ironfoot became the new King Under the Mountain, and a new era of peace and prosperity began for the region.</p>`,
+                    journeyHome: `<h4 class="text-xl mt-6 mb-4">A Final Farewell and an Unwelcome Homecoming</h4> <p class="mb-4">They arrived back in Rivendell on May 1, 2942, where they rested and shared their tales with Elrond. After their pleasant stay, Bilbo traveled the final leg of his journey, covering the <strong>397 miles</strong> (639 km) back to the Shire. He arrived at Bag End on June 22, 2942, only to find his possessions being auctioned off. Having been gone for over a year, he had been presumed dead. After much trouble buying back his own furniture, Bilbo was reinstated as being alive, though he had lost his reputation for respectability. This chaotic scene marked the true end of his great adventure.</p> <p>The structure of the return journey serves as a narrative foil to the outward quest. The outward journey was defined by urgency and constant danger. In contrast, the return journey was characterized by a leisurely pace and safety. This thematic contrast underscores Bilbo's transformation. He left as a flustered hobbit on a frightening quest; he returned a seasoned adventurer who could afford to take his time. The very nature of his journey had changed because he himself had changed.</p>`,
+                    comparison: `<p class="mt-4 mb-4">Three core factors account for the disparity: the urgency of the mission, the composition of the company, and the ultimate purpose of the journey. First, urgency: Frodo's was a flight for his life and the fate of the world, hunted by the Nazgûl. Bilbo's quest, while dangerous, was a treasure expedition. Second, composition: Bilbo traveled with a large party of thirteen dwarves, while Frodo's Fellowship was more nimble and guided by Aragorn. Finally, purpose: Bilbo's quest was one of reclamation; Frodo's was one of renunciation and destruction. The numbers are a direct reflection of the narrative's soul: one is an adventure story, the other is an epic of war and sacrifice.</p>`,
+                },
+                // Chart Data
+                paceChartTitle: "Breakdown of the 172-Day Outward Journey",
+                paceChartLabel1: "Travel & Action Days",
+                paceChartLabel2: "Stationary Days",
+                comparisonChartTitle: "Comparative Journey Metrics",
+                comparisonChartLabel1: "Bilbo",
+                comparisonChartLabel2: "Frodo",
+                comparisonChartXLabels: ['Total Distance (miles)', 'Total Duration (days)', 'Pace to Rivendell (mi/day)']
+            },
+            // Hungarian Translation
+            hu: {
+                docTitle: "Oda-vissza: Egy adatvezérelt utazás",
+                mainTitle: "Oda-vissza",
+                subTitle: "Zsákos Bilbó utazásának kronológiai és földrajzi elemzése",
+                readMoreIntro: "A teljes bevezető elolvasása",
+                readMoreDetails: "Részletek elolvasása",
+                readFullAnalysis: "A teljes elemzés elolvasása",
+                section1Title: "Egy kaland mértéke: Összesítések időben és távolságban",
+                section1Para1: "Zsákos Bilbó utazásának története a Magányos Hegységhez, ahogyan azt J.R.R. Tolkien <em>A hobbit (A babó)</em> című művében megörökítette, egy jelentős terjedelmű kaland, amely időben és távolságban is mérhető. Ezen mérőszámok pontos ismerete nemcsak tényszerű választ ad az utazás hosszúságának kérdésére, hanem alapvető kontextust is biztosít a narratíva egyedi ütemezésének és karakterének megértéséhez.",
+                table1Title: "Az erebori küldetés egy pillantásra",
+                table1Header1: "Mérőszám",
+                table1Header2: "Érték",
+                table1Row1Col1: "Teljes időtartam (Oda-vissza)",
+                table1Row1Col2: "Kb. <strong>14 hónap</strong> (H.K. 2941. április 27. - 2942. június 22.)",
+                table1Row2Col1: "Odaút időtartama (Zsákvégtől Ereborig)",
+                table1Row2Col2: "Kb. <strong>172 nap</strong>",
+                table1Row3Col1: "Odaút távolsága",
+                table1Row3Col2: "Kb. <strong>950 mérföld</strong> (1529 km)",
+                table1Row4Col1: "Átlagos napi tempó (odaút)",
+                table1Row4Col2: "Kb. <strong>5,52 mérföld/nap</strong> (8,88 km/nap)",
+                section1PaceTitle: "Az epizodikus tempó",
+                section1PacePara: "Egy <strong>950 mérföldes</strong> (1529 km) utazás, amelyet <strong>172 nap</strong> alatt tettek meg, alig több mint <strong>napi 5,5 mérföldes</strong> (8,88 km/nap) átlagos tempót eredményez. Ez a haladási sebesség rendkívül lassú egy elszánt csapattól. Ezt az eltérést nem magyarázhatja pusztán a lassú gyaloglás; logikusan arra utal, hogy az utazás sokkal többről szólt, mint folyamatos haladásról. Az alacsony átlagsebesség matematikai mutatója annak, hogy a küldetés epizodikus volt, amelyet jelentős megszakítások, hosszú pihenőidők és előre nem látható késések tarkítottak. Ez az értelmezés átformálja az egész narratívát, egy egyszerű A-ból B-be tartó túráról egy összetettebb, meg-megálló élményre helyezve a hangsúlyt, ahol az álló helyzetben töltött idő ugyanolyan jelentőséggel bírt, mint a mozgásban töltött idő.",
+                section2Title: "Az odafelé vezető út: Részletes útiterv",
+                stage1Title: "1. Kalandra hívás és az első lépések (2941. április 26. – június 3.)",
+                stage1Para: "A történet nem az úton kezdődik, hanem a „Váratlan vendégség”-gel Zsákvégen, H.K. 2941. április 26-án este. Egy éjszakányi éneklés és sárkányokról szóló beszélgetés után Bilbó április 27-én reggel kirohan, hogy csatlakozzon Tölgypajzsos Thorin csapatához.",
+                stage2Title: "2. Kéthetes pihenő Völgyzugolyban (2941. június 4. – Évközép napja)",
+                stage2Para: "Az út nehézségei után a csapat menedéket talált Völgyzugoly rejtett völgyében. Itt Elrond látta őket vendégül, akinek bölcsessége felbecsülhetetlennek bizonyult. Thrór térképét vizsgálva Elrond felfedte a titkos hold-betűket: „Állj a szürke kő mellé, mikor a rigó kopog...”.",
+                stage3Title: "3. Át a Magas Hágón és a hegyek alatt (2941. Évközép napja – július)",
+                stage3Para: "Elhagyva Völgyzugoly kényelmét, a csapat elindult, hogy átkeljen a félelmetes Ködhegységen. Itt orkok fogták el őket, és a menekülés közben Bilbó eszméletét vesztette és elszakadt a többiektől.",
+                stage4Title: "4. A Bakacsinerdő árnyékában (2941. augusztus – szeptember)",
+                stage4Para: "A csapat Gandalf nélkül lép be a Bakacsinerdőbe. Az útjuk a Bakacsinerdőn keresztül az éhezés, szomjúság és félelem megpróbáltatása volt. Miután letértek az ösvényről, a törpöket óriáspókok ejtették fogságba. Bilbó volt az, aki eszét és varázsgyűrűjét használva megmentette őket, legyőzve első ellenségét és elnevezve kis kardját „Fullánk”-nak. Alighogy megszabadultak a pókoktól, ismét fogságba estek, ezúttal Thranduil király bakacsinerdei tündéi ejtették őket fogságba. Ez a fogság egy újabb jelentős késedelmet okozott küldetésükben. Az idővonal elemzése szerint a törpök <strong>26 napig</strong> voltak foglyok a Tündekirály csarnokaiban.",
+                stage5Title: "5. Le az Erdei Folyón Tóvárosba (2941. szeptember – október)",
+                stage5Para: "Bilbó merész szökést tervel ki hordókban, és 51. születésnapján, szeptember 22-én érkezik meg Tóvárosba. Egy <strong>kéthetes</strong> pihenő után elérik a Magányos Hegyet és Durin napján megtalálják a titkos ajtót.",
+                section3Title: "A következmények: Ostrom, csata és egy király temetése <br> (2941. október – november)",
+                section3Para: "A Magányos Hegyhez való megérkezés a küldetés csúcspontját jelentette. Miután Smaug megtámadta Tóvárost és Bard 2941. október 1-jén megölte, Thorin „sárkánykórba” esett, nem volt hajlandó megosztani a kincset, ami feszült ostromhoz vezetett.",
+                section4Title: "A hazaút: Oda és vissza <br> (2941 vége – 2942. június 22.)",
+                section4Para: "A hazaút éles ellentétben állt az odaúttal. Bilbó és Gandalf egy biztonságosabb útvonalon haladt a Bakacsinerdőtől északra, és az egész telet Beorn vendégeként töltötték, csak 2942 tavaszán indultak tovább.",
+                section6Title: "Összehasonlító elemzés: Bilbó és Frodó küldetése",
+                section6SubTitle: "Kulcsfontosságú statisztikai különbségek és narratív következményeik",
+                section6Para: "Ahhoz, hogy teljes mértékben értékelni tudjuk Bilbó utazásának mértékét, érdemes összehasonlítani azt Frodóéval. A statisztikai különbségek markánsak és rávilágítanak a különböző narratív hangulatokra. Frodó küldetése egy kétségbeesett menekülés volt, míg Bilbóé egy kincsszerző expedíció.",
+                table2Title: "Összehasonlító utazási mérőszámok: Bilbó vs. Frodó",
+                table2Header1: "Mérőszám",
+                table2Header2: "Bilbó utazása (odaút)",
+                table2Header3: "Frodó utazása (odaút)",
+                table2Row1Col1: "<strong>Teljes távolság a célig</strong>",
+                table2Row1Col2: "~<strong>950 mérföld</strong> (1529 km)",
+                table2Row1Col3: "~<strong>1800 mérföld</strong> (2897 km)",
+                table2Row2Col1: "<strong>Teljes időtartam a célig</strong>",
+                table2Row2Col2: "<strong>172 nap</strong>",
+                table2Row2Col3: "<strong>185 nap</strong>",
+                table2Row3Col1: "<strong>Átlag napi tempó Völgyzugolyig</strong>",
+                table2Row3Col2: "<strong>10,17 mérföld/nap</strong> (16,37 km/nap)",
+                table2Row3Col3: "<strong>16,9 mérföld/nap</strong> (27,2 km/nap)",
+                conclusionTitle: "Konklúzió: „Egy kaland” valódi jelentése",
+                conclusionPara1: "Zsákos Bilbó utazása egy grandiózus vállalkozás volt, körülbelül <strong>14 hónapig</strong> tartott és közel <strong>2000 mérföldet</strong> (3219 km) tett meg. Mégis, ha csak ezekre a számokra összpontosítunk, elveszítjük mélyebb jelentőségüket. Az időtartam és a távolság a történet minőségi természetének mennyiségi kifejeződése.",
+                conclusionPara2: "Végül is, Bilbó utazásának legfontosabb mércéje nem a mérföldekben vagy napokban rejlik, hanem a főhős fejlődésében. Egy tiszteletreméltó, kényelemszerető hobbitként hagyta el Zsákvéget, ízig-vérig „Zsákos”-ként. Egy világot látott, bátor és mélyen megváltozott egyénként tért vissza. Az utazás hossza és epizodikus szerkezete volt az az állapot, amelyet a szerző tökéletesen kalibrált, hogy felébressze karakterének rejtett „Tuk” oldalát, beteljesítve azt az ígéretet, amelyet Gandalf a kezdetektől fogva látott benne. Az utazás elég hosszú és elég messzire vezetett ahhoz, hogy Zsákos Bilbót oda és vissza vigye, nemcsak egy aranyhegyhez, hanem önmaga egy új változatához is.",
+                disclaimer1: "A kutatás, amely ezen oldal alapját képezi, a <strong>Gemini 2.5 PRO</strong> mélyreható kutatásai révén jött létre.",
+                disclaimer2: "Ennek megfelelően tartalmazhat pontatlanságokat.",
+                disclaimer3: "Ha szeretnéd a teljes kutatási dokumentumot elolvasni, azt ezen a <a href=\"https://docs.google.com/document/d/103dut6ilJKpIeg0kEsXuEdc-VHoTaQb3NWkJYXMM-5E/edit?usp=sharing\" target=\"_blank\" class=\"text-blue-600 hover:underline font-bold\">linken</a> teheted meg (angolul).",
+                modalDefaultTitle: "Részletek",
+                fullTexts: {
+                    introduction: `<p class="mb-6">Az egész saga, attól a pillanattól kezdve, hogy Zsákos Bilbó kilépett Zsákvég ajtaján, egészen a meglepő hazatéréséig, körülbelül <strong>egy év és két hónapig</strong> tartott. Az erebori küldetés a Harmadkor 2941. évében kezdődött, és Bilbó hazatérésével zárult 2942-ben. Pontosabban, a kaland Bilbó sietős távozásával kezdődött 2941. április 27-én reggel, és hivatalosan akkor ért véget, amikor 2942. június 22-én visszaérkezett saját hobbitlakásába, bezárva az „oda-vissza” kört.</p> <p class="mb-6">Az út során megtett fizikai távolság alapos tanulmányozás tárgya volt. Karen Wynn Fonstad <em>Középfölde Atlasza</em> című művéből származó elemzések szerint az odaút Hobbitfalváról (A Megye) a Magányos Hegyig (Erebor) körülbelül <strong>950 mérföld</strong> (1529 km) volt. A visszaút, bár részben más és hosszabb útvonalon haladt, hasonló távolságot tett ki, a Völgyzugolyból Zsákvégig tartó utolsó szakasz önmagában <strong>397 mérföld</strong> (639 km) volt.</p>`,
+                    stage1: `<p class="mb-4">A csapat első nagyobb szakasza kelet felé vezette őket a Megye ismert vidékeiről Eriador vadonjába. Útjuk a Troll-fennsíkra vitte őket, ahol először találkoztak a három kő-trollal: Tommal, Berttel és Williammel. Csak Gandalf okos hangutánzása mentette meg a törpöket attól, hogy vacsorává váljanak, ami vitában tartotta a trollokat, amíg a hajnal kővé nem változtatta őket. Az utazás ezen kezdeti szakasza Zsákvégtől Völgyzugoly menedékéig <strong>397 mérföldet</strong> (639 km) tett ki, és <strong>39 napig</strong> tartott. Az aktív utazás ezen időszakában a tempójuk tiszteletreméltó, bár kissé lassú, átlagosan <strong>napi 10,17 mérföld</strong> (16,37 km/nap) volt.</p>`,
+                    stage2: `<p class="mb-4">Ez nem csupán egy éjszakai megálló volt. A csapat Völgyzugolyban töltött ideje jelentős pihenési és felépülési időszak volt. Június elején érkeztek, és csak Évközép napján indultak tovább. A részletes idővonal-elemzés szerint ez a pihenő körülbelül <strong>29 napig</strong> tartott. Ez a hosszabb szünet kiemeli az utazás jellegét: nem kétségbeesett menekülés volt, hanem egy tervezett expedíció, amely lehetővé tette a stratégiai késlekedést a pihenésre, információgyűjtésre és a veszélyesebb út előkészítésére.</p>`,
+                    stage3: `<p class="mb-4">Itt, 2941. július 1-jén történt az utazás legfontosabb eseménye – és a Harmadkor egyik legjelentősebb eseménye –: Bilbó rábukkant egy kicsi, hideg gyűrűre és zsebre vágta. Röviddel ezután találkozott Gollammal. A híres találósjáték során Bilbó végül legyőzte Gollamot, és a gyűrű újonnan felfedezett láthatatlanná tévő erejét használva sikerült elmenekülnie a lény és az ork alagutak karmaiból. Miután újra csatlakozott társaihoz, akiket orkok és varg szövetségeseik üldöztek, az egész csapatot a Nagy Sasok időben érkező közbelépése mentette meg, akik elvitték őket a hegyekből.</p>`,
+                    stage5: `<p class="mb-4">Bilbó merész szökést tervel ki, a törpöket üres boroshordókba csomagolva és leúsztatva őket az Erdei Folyón Tóvárosba. Szeptember 22-én érkeztek meg, ami véletlenül Bilbó 51. születésnapja volt. Tóváros emberei, emlékezve a Hegy alatti Király visszatéréséről szóló régi jóslatokra, nagy ünnepléssel fogadták a csapatot. Körülbelül <strong>kéthetes</strong> pihenő után, hogy visszanyerjék erejüket és készleteket gyűjtsenek, végül elindultak utazásuk utolsó szakaszára a Magányos Hegy felé, és Durin napján megtalálták a titkos ajtót.</p>`,
+                    aftermath: `<h4 class="text-xl mt-6 mb-4">Az Öt Sereg Csatája</h4> <p class="mb-4">Abban a reményben, hogy elkerül egy felesleges háborút, Bilbó titokban átadta az Arkenkövet Bardnak és Thranduilnak, hogy alku tárgyaként használják. Thorint feldühítette ez a tett, amelyet árulásnak tekintett. A helyzet eszkalálódott Vaslábú Dáin törp felmentő seregének megérkezésével. Ebben a kritikus pillanatban Gandalf újra megjelent, figyelmeztetve egy nagyobb veszélyre: orkok és vargok hatalmas seregére a Ködhegységből, Bolg, Azog fia vezetésével. Ez az új fenyegetés arra kényszerítette az egymással szemben álló feleket, hogy egyesüljenek. A Suhatag völgyében 2941. október 10-én lezajlott összecsapás az Öt Sereg Csatája néven vált ismertté. A szövetséget majdnem legyőzték, amíg a Nagy Sasok és Beorn hirtelen érkezése meg nem fordította a csata menetét, aki összezúzta Bolg ork vezért.</p> <h4 class="text-xl mt-6 mb-4">Az új uralkodás</h4> <p>A győzelem döntő, de költséges volt. Tölgypajzsos Thorin halálosan megsebesült. Utolsó pillanataiban kibékült Bilbóval. Unokaöccsei, Fíli és Kíli szintén elestek. Thorint a hegy mélyén temették el, mellén az Arkenkővel. Unokatestvére, Vaslábú Dáin lett az új Hegy Alatti Király, és a béke és jólét új korszaka kezdődött a régióban.</p>`,
+                    journeyHome: `<h4 class="text-xl mt-6 mb-4">Egy utolsó búcsú és egy kellemetlen hazatérés</h4> <p class="mb-4">2942. május 1-jén érkeztek vissza Völgyzugolyba, ahol Elrondnál pihentek és meséltek kalandjaikról. Kellemes tartózkodásuk után Bilbó megtette utazása utolsó szakaszát, a <strong>397 mérföldet</strong> (639 km) vissza a Megyébe. Június 22-én érkezett Zsákvégre, ahol azt tapasztalta, hogy ingóságait árverezik. Mivel több mint egy évig távol volt, halottnak nyilvánították. Sok vesződség után, hogy visszavásárolja saját bútorait, Bilbót újra élőnek nyilvánították, bár elvesztette tiszteletreméltó hírnevét. Ez a kaotikus jelenet jelentette nagy kalandjának igazi végét.</p> <p>A hazaút szerkezete narratív ellenpontként szolgál az odaúthoz képest. Az odaútat a sürgősség és az állandó veszély határozta meg. Ezzel szemben a hazaútat a kényelmes tempó és a biztonság jellemezte. Ez a tematikus kontraszt hangsúlyozza Bilbó átalakulását. Egy ijedt hobbitként indult el egy félelmetes küldetésre; egy tapasztalt kalandorként tért vissza, aki megengedhette magának, hogy időt szánjon az útra. Utazásának természete azért változott meg, mert ő maga is megváltozott.</p>`,
+                    comparison: `<p class="mt-4 mb-4">Három fő tényező magyarázza az eltérést: a küldetés sürgőssége, a csapat összetétele és az utazás végső célja. Először is a sürgősség: Frodó az életéért és a világ sorsáért menekült, a Nazgûlok által üldözve. Bilbó küldetése, bár veszélyes volt, alapvetően egy kincsszerző expedíció volt. Másodszor, az összetétel: Bilbó egy tizenhárom törpből álló nagy csapattal utazott, míg Frodó Szövetsége mozgékonyabb volt és Aragorn vezette. Végül a cél: Bilbó küldetése a visszaszerzésről szólt; Frodóé a lemondásról és a pusztításról. A számok a narratíva lelkét tükrözik: az egyik egy kalandtörténet, a másik egy háborús és áldozathozatali eposz.</p>`,
+                },
+                paceChartTitle: "A 172 napos odaút felbontása",
+                paceChartLabel1: "Utazási és cselekvési napok",
+                paceChartLabel2: "Helyben töltött napok",
+                comparisonChartTitle: "Összehasonlító utazási mérőszámok",
+                comparisonChartLabel1: "Bilbó",
+                comparisonChartLabel2: "Frodó",
+                comparisonChartXLabels: ['Teljes táv (mérföld)', 'Teljes időtartam (nap)', 'Tempó Völgyzugolyig (mi/nap)']
+            },
+            // Romanian Translation
+            ro: {
+                docTitle: "O poveste de dus și întors: O călătorie bazată pe date",
+                mainTitle: "O poveste de dus și întors",
+                subTitle: "O analiză cronologică și geografică a călătoriei lui Bilbo Baggins",
+                readMoreIntro: "Citește întreaga introducere",
+                readMoreDetails: "Citește detaliile complete",
+                readFullAnalysis: "Citește analiza completă",
+                section1Title: "Măsura unei aventuri: Totaluri în timp și distanță",
+                section1Para1: "Povestea călătoriei lui Bilbo Baggins către Muntele Singuratic, așa cum este cronicizată de J.R.R. Tolkien în <em>Hobbitul</em>, este o aventură de o anvergură considerabilă, măsurabilă atât în timp, cât și în distanță. O înțelegere precisă a acestor metrici oferă nu numai un răspuns factual la întrebarea privind durata călătoriei, ci și un context fundamental pentru a aprecia ritmul și caracterul unic al narațiunii.",
+                table1Title: "Misiunea din Erebor dintr-o privire",
+                table1Header1: "Metrică",
+                table1Header2: "Valoare",
+                table1Row1Col1: "Durata totală (Dus și întors)",
+                table1Row1Col2: "Aprox. <strong>14 luni</strong> (27 aprilie 2941 - 22 iunie 2942)",
+                table1Row2Col1: "Durata călătoriei de ducere (Fundătura la Erebor)",
+                table1Row2Col2: "Aprox. <strong>172 de zile</strong>",
+                table1Row3Col1: "Distanța călătoriei de ducere",
+                table1Row3Col2: "Aprox. <strong>950 mile</strong> (1529 km)",
+                table1Row4Col1: "Ritmul mediu zilnic (ducere)",
+                table1Row4Col2: "Aprox. <strong>5,52 mile/zi</strong> (8,88 km/zi)",
+                section1PaceTitle: "Ritmul episodic",
+                section1PacePara: "O călătorie de <strong>950 de mile</strong> (1529 km) finalizată în <strong>172 de zile</strong> rezultă într-un ritm mediu de puțin peste <strong>5,5 mile pe zi</strong> (8,88 km/zi). Această rată de deplasare este remarcabil de lentă pentru un grup hotărât. Discrepanța nu poate fi explicată doar prin mers lent; ea indică logic o călătorie compusă din mult mai mult decât o deplasare continuă. Ritmul mediu scăzut este un indicator matematic că misiunea a fost episodică, punctată de întreruperi semnificative, perioade lungi de odihnă și întârzieri neprevăzute. Această înțelegere reîncadrează întreaga narațiune, transformând-o dintr-o simplă drumeție de la A la B într-o experiență mai complexă, cu opriri și porniri, unde timpul petrecut pe loc a fost la fel de semnificativ ca timpul petrecut în mișcare.",
+                section2Title: "Drumul de ducere: Un itinerar detaliat",
+                stage1Title: "1. Chemarea la aventură și primii pași (26 aprilie – 3 iunie 2941)",
+                stage1Para: "Povestea nu începe pe drum, ci cu „O petrecere neașteptată” la Fundătura (Bag End) în seara de 26 aprilie, A.T. 2941. După o noapte de cântece și discuții despre dragoni, Bilbo se grăbește să iasă în dimineața de 27 aprilie pentru a se alătura Companiei lui Thorin Scut-de-Stejar.",
+                stage2Title: "2. Un răgaz de două săptămâni la Rivendell (4 iunie – Ziua de Mijlocul Anului, 2941)",
+                stage2Para: "După greutățile drumului, compania a găsit sanctuar în valea ascunsă a Rivendell. Aici, au fost găzduiți de Elrond, a cărui înțelepciune s-a dovedit de neprețuit. Examinând harta lui Thrór, Elrond a dezvăluit literele-lunare secrete: „Stai lângă piatra cenușie când sturzul bate...”.",
+                stage3Title: "3. Peste Trecătoarea Înaltă și pe sub munți (Ziua de Mijlocul Anului – iulie 2941)",
+                stage3Para: "Părăsind confortul din Rivendell, compania a pornit să traverseze formidabilii Munți Cețoși. Au fost capturați de goblini, și în timpul acestei fugi Bilbo a fost lovit, pierzându-și cunoștința și fiind separat de ceilalți.",
+                stage4Title: "4. În umbra Codrului Întunecat (august – septembrie 2941)",
+                stage4Para: "Compania intră în Codrul Întunecat (Mirkwood) fără Gandalf. Călătoria lor a fost o încercare de foame, sete și frică. După ce s-au abătut de la cărare, gnomii au fost capturați de Păianjeni Uriași. Bilbo a fost cel care, folosindu-și istețimea și inelul magic, a reușit să-i salveze, ucigându-și primul dușman și numindu-și sabia „Sting”. Imediat ce au scăpat de păianjeni, au fost capturați din nou, de data aceasta de Elfii din Pădure ai Regelui Thranduil. Această perioadă de captivitate a fost o altă întârziere substanțială în misiunea lor. Analiza cronologiei sugerează că gnomii au fost ținuți prizonieri în sălile Regelui Elfilor timp de <strong>26 de zile</strong>.",
+                stage5Title: "5. Pe Râul Pădurii spre Orașul Lacului (septembrie – octombrie 2941)",
+                stage5Para: "Bilbo concepe o evadare îndrăzneață în butoaie, ajungând în Orașul Lacului de ziua lui de 51 de ani, pe 22 septembrie. După o odihnă de <strong>două săptămâni</strong>, ajung la Muntele Singuratic și găsesc ușa secretă în Ziua lui Durin.",
+                section3Title: "Urmările: Asediu, bătălie și funeraliile unui rege <br> (octombrie – noiembrie 2941)",
+                section3Para: "Sosirea la Muntele Singuratic a început faza culminantă a misiunii. După ce Smaug a atacat Orașul Lacului și a fost ucis de Bard pe 1 octombrie 2941, Thorin a cedat „bolii dragonului”, refuzând să împartă tezaurul și ducând la un asediu tensionat.",
+                section4Title: "Călătoria spre casă: Dus și întors <br> (Sfârșitul lui 2941 – 22 iunie 2942)",
+                section4Para: "Călătoria de întoarcere contrastează puternic cu cea de ducere. Bilbo și Gandalf au călătorit pe un traseu mai sigur la nord de Codrul Întunecat și au petrecut întreaga iarnă ca oaspeți ai lui Beorn, plecând abia în primăvara lui 2942.",
+                section6Title: "O analiză comparativă: Misiunea lui Bilbo vs. cea a lui Frodo",
+                section6SubTitle: "Diferențe statistice cheie și implicațiile lor narative",
+                section6Para: "Pentru a aprecia pe deplin amploarea călătoriei lui Bilbo, este util să o comparăm cu cea a lui Frodo. Diferențele statistice sunt izbitoare și dezvăluie tonurile narative diferite. Misiunea lui Frodo a fost o fugă disperată, în timp ce cea a lui Bilbo a fost o expediție pentru comori.",
+                table2Title: "Metrici comparative ale călătoriilor: Bilbo vs. Frodo",
+                table2Header1: "Metrică",
+                table2Header2: "Călătoria lui Bilbo (ducere)",
+                table2Header3: "Călătoria lui Frodo (ducere)",
+                table2Row1Col1: "<strong>Distanța totală până la destinație</strong>",
+                table2Row1Col2: "~<strong>950 mile</strong> (1529 km)",
+                table2Row1Col3: "~<strong>1.800 mile</strong> (2897 km)",
+                table2Row2Col1: "<strong>Durata totală până la destinație</strong>",
+                table2Row2Col2: "<strong>172 de zile</strong>",
+                table2Row2Col3: "<strong>185 de zile</strong>",
+                table2Row3Col1: "<strong>Ritm mediu zilnic până la Rivendell</strong>",
+                table2Row3Col2: "<strong>10,17 mile/zi</strong> (16,37 km/zi)",
+                table2Row3Col3: "<strong>16,9 mile/zi</strong> (27,2 km/zi)",
+                conclusionTitle: "Concluzie: Adevăratul înțeles al „unei aventuri”",
+                conclusionPara1: "Călătoria lui Bilbo Baggins a fost o întreprindere grandioasă de aproximativ <strong>14 luni</strong> și aproape <strong>2.000 de mile</strong> (3219 km). Cu toate acestea, a ne concentra exclusiv pe aceste cifre înseamnă a le rata semnificația mai profundă. Durata și distanța sunt expresia cantitativă a naturii calitative a poveștii.",
+                conclusionPara2: "În cele din urmă, cea mai importantă măsură a călătoriei lui Bilbo nu este în mile sau zile, ci în creșterea protagonistului său. A părăsit Fundătura ca un hobbit respectabil, iubitor de confort, un „Baggins” get-beget. S-a întors ca un individ umblat prin lume, curajos și profund schimbat. Lungimea și structura episodică a călătoriei au fost condițiile perfect calibrate de autor pentru a trezi latura latentă „Took” a caracterului său, îndeplinind promisiunea pe care Gandalf o văzuse în el de la bun început. Călătoria a fost suficient de lungă și de departe pentru a-l duce pe Bilbo Baggins dus și întors, nu doar la un munte de aur, ci la o nouă versiune a sa.",
+                disclaimer1: "Această cercetare, care stă la baza acestei pagini, a fost generată de <strong>Gemini 2.5 PRO</strong> printr-o cercetare aprofundată.",
+                disclaimer2: "Ca atare, poate conține inexactități.",
+                disclaimer3: "Dacă doriți să aprofundați documentul de cercetare complet, o puteți face dând clic pe acest <a href=\"https://docs.google.com/document/d/103dut6ilJKpIeg0kEsXuEdc-VHoTaQb3NWkJYXMM-5E/edit?usp=sharing\" target=\"_blank\" class=\"text-blue-600 hover:underline font-bold\">link</a>.",
+                modalDefaultTitle: "Detalii",
+                fullTexts: {
+                    introduction: `<p class="mb-6">Întreaga saga, din momentul în care Bilbo Baggins a ieșit pe ușa din față a locuinței sale din Fundătura până la întoarcerea sa eventuală și destul de surprinzătoare, a durat aproximativ <strong>un an și două luni</strong>. Misiunea din Erebor a început în anul 2941 al Erei a Treia (A.T.) și s-a încheiat cu întoarcerea lui Bilbo acasă în A.T. 2942. Mai exact, aventura a început cu plecarea pripită a lui Bilbo în dimineața de 27 aprilie 2941 și s-a încheiat oficial când a ajuns înapoi la propria sa gaură-de-hobbit pe 22 iunie 2942, completând cercul complet al „poveștii de dus și întors”.</p> <p class="mb-6">Distanța fizică parcursă în această misiune a fost subiectul unui studiu meticulos. Conform analizelor derivate din <em>Atlasul Pământului de Mijloc</em> al lui Karen Wynn Fonstad, călătoria de ducere de la Hobbiton din Comitat la Muntele Singuratic (Erebor) a acoperit o distanță de aproximativ <strong>950 mile</strong> (1529 km). Călătoria de întoarcere, deși a urmat un traseu parțial diferit și mai lung, a implicat traversarea unei distanțe comparabile, ultima porțiune de la Rivendell la Fundătura măsurând singură <strong>397 mile</strong> (639 km).</p>`,
+                    stage1: `<p class="mb-4">Prima etapă majoră a călătoriei i-a dus spre est, ieșind din ținuturile familiare ale Comitatului și intrând în sălbăticia Eriadorului. Drumul lor i-a condus în Pădurea Trolilor, unde au avut prima lor întâlnire periculoasă cu cei trei troli de piatră, Tom, Bert și William. Doar imitația isteață a vocilor lor de către Gandalf, care i-a ținut certându-se până când zorii i-au transformat în piatră, i-a salvat pe gnomi de la a deveni o masă. Această etapă inițială a călătoriei, de la Fundătura la sanctuarul din Rivendell, a acoperit o distanță de <strong>397 mile</strong> (639 km) și a durat <strong>39 de zile</strong>. În această perioadă de călătorie activă, ritmul lor a fost unul mai respectabil, deși încă oarecum lejer, de <strong>10,17 mile pe zi</strong> (16,37 km/zi).</p>`,
+                    stage2: `<p class="mb-4">Aceasta nu a fost o simplă oprire de o noapte. Șederea companiei la Rivendell a fost o perioadă semnificativă de odihnă și recuperare. Au ajuns la începutul lunii iunie și nu au plecat până la Ziua de Mijlocul Anului. Analiza detaliată a cronologiei indică faptul că acest răgaz a durat aproximativ <strong>29 de zile</strong>. Această pauză prelungită evidențiază natura călătoriei: nu a fost o fugă disperată, ci o expediție planificată care a permis întârzieri strategice pentru a se odihni, a aduna informații și a se pregăti pentru drumul mai periculos care urma.</p>`,
+                    stage3: `<p class="mb-4">Aici, pe 1 iulie 2941, a avut loc cel mai important eveniment al călătoriei — și, într-adevăr, unul dintre cele mai semnificative evenimente ale Erei a Treia —: Bilbo a dat peste un inel mic și rece și l-a băgat în buzunar. La scurt timp după aceea, l-a întâlnit pe creatura Gollum. În faimosul Joc de Ghicitori care a urmat, Bilbo l-a încurcat în cele din urmă pe Gollum și, folosind noua putere a Inelului de a deveni invizibil, a reușit să scape din ghearele creaturii și din tunelurile goblinilor. După ce s-a reîntâlnit cu tovarășii săi, care erau hărțuiți de goblini și de aliații lor Wargi, întreaga companie a fost salvată de la o moarte sigură prin intervenția oportună a Vulturilor celor Mari, care i-au dus departe de munți.</p>`,
+                    stage5: `<p class="mb-4">Bilbo concepe o evadare îndrăzneață, împachetându-i pe gnomi în butoaie de vin goale și plutindu-i pe Râul Pădurii până în Orașul Lacului. Au sosit pe 22 septembrie, care a coincis cu cea de-a 51-a aniversare a lui Bilbo. Oamenii din Orașul Lacului, amintindu-și de vechile profeții despre întoarcerea Regelui de sub Munte, au primit compania cu mare sărbătoare. După o odihnă de aproximativ <strong>două săptămâni</strong> pentru a-și reface puterile și a aduna provizii, au pornit în cele din urmă spre ultima etapă a călătoriei lor către Muntele Singuratic, găsind ușa secretă în Ziua lui Durin.</p>`,
+                    aftermath: `<h4 class="text-xl mt-6 mb-4">Bătălia celor Cinci Armate</h4> <p class="mb-4">Sperând să evite un război inutil, Bilbo a livrat în secret Piatra Arkenstone lui Bard și Thranduil pentru a fi folosită ca monedă de schimb. Thorin a fost înfuriat de acest act, pe care l-a considerat trădare. Situația a escaladat odată cu sosirea armatei de întărire a gnomilor condusă de Dáin Picior-de-Fier. În acest moment critic, Gandalf a reapărut, avertizând asupra unui pericol mult mai mare: o armată masivă de Goblini și Wargi din Munții Cețoși, condusă de Bolg, fiul lui Azog. Această nouă amenințare i-a forțat pe potențialii dușmani să se unească. Conflictul rezultat, purtat în valea Dale pe 10 octombrie 2941, a devenit cunoscut sub numele de Bătălia celor Cinci Armate. Alianța a fost aproape copleșită până când soarta a fost întoarsă de sosirea bruscă a Vulturilor celor Mari și a lui Beorn, care l-a zdrobit pe căpetenia goblinilor, Bolg.</p> <h4 class="text-xl mt-6 mb-4">Noul Regat</h4> <p>Victoria a fost decisivă, dar costisitoare. Thorin Scut-de-Stejar fusese rănit de moarte. În ultimele sale clipe, s-a împăcat cu Bilbo. Nepoții săi, Fíli și Kíli, au fost de asemenea uciși. Thorin a fost înmormântat adânc în munte, cu Arkenstone pe piept. Vărul său, Dáin Picior-de-Fier, a devenit noul Rege de sub Munte, și o nouă eră de pace și prosperitate a început pentru regiune.</p>`,
+                    journeyHome: `<h4 class="text-xl mt-6 mb-4">Un ultim adio și o întoarcere neplăcută</h4> <p class="mb-4">S-au întors la Rivendell pe 1 mai 2942, unde s-au odihnit și și-au împărtășit poveștile cu Elrond. După șederea lor plăcută, Bilbo a parcurs ultima etapă a călătoriei sale, acoperind cele <strong>397 mile</strong> (639 km) înapoi spre Comitat. A ajuns la Fundătura pe 22 iunie 2942, doar pentru a găsi bunurile sale scoase la licitație. Fiind plecat de peste un an, fusese declarat mort. După multe probleme pentru a-și răscumpăra propriul mobilier, Bilbo a fost reinstalat ca fiind în viață, deși își pierduse reputația de respectabilitate. Această scenă haotică a marcat adevăratul sfârșit al marii sale aventuri.</p> <p>Structura călătoriei de întoarcere servește drept contrast narativ pentru călătoria de ducere. Călătoria de ducere a fost definită de urgență și pericol constant. În schimb, călătoria de întoarcere a fost caracterizată de un ritm lejer și siguranță. Acest contrast tematic subliniază transformarea lui Bilbo. A plecat ca un hobbit agitat într-o misiune înfricoșătoare; s-a întors ca un aventurier experimentat care își putea permite să-și ia timpul. Natura însăși a călătoriei sale s-a schimbat, deoarece el însuși s-a schimbat.</p>`,
+                    comparison: `<p class="mt-4 mb-4">Trei factori principali explică disparitatea: urgența misiunii, compoziția companiei și scopul final al călătoriei. În primul rând, urgența: cea a lui Frodo a fost o fugă pentru viața sa și pentru soarta lumii, vânat de Nazgûl. Misiunea lui Bilbo, deși periculoasă, a fost în esență o expediție pentru comori. În al doilea rând, compoziția: Bilbo a călătorit cu un grup mare de treisprezece gnomi, în timp ce Frăția lui Frodo era mai agilă și ghidată de Aragorn. În cele din urmă, scopul: misiunea lui Bilbo era una de recuperare; cea a lui Frodo era una de renunțare și distrugere. Cifrele sunt o reflecție directă a sufletului narațiunii: una este o poveste de aventuri, cealaltă este o epopee a războiului și sacrificiului.</p>`,
+                },
+                paceChartTitle: "Detalierea călătoriei de ducere de 172 de zile",
+                paceChartLabel1: "Zile de călătorie și acțiune",
+                paceChartLabel2: "Zile staționare",
+                comparisonChartTitle: "Metrici comparative ale călătoriilor",
+                comparisonChartLabel1: "Bilbo",
+                comparisonChartLabel2: "Frodo",
+                comparisonChartXLabels: ['Distanța totală (mile)', 'Durata totală (zile)', 'Ritm până la Rivendell (mi/zi)']
+            }
         };
 
+        // --- GLOBAL VARIABLES ---
+        let currentLang = 'en';
+        let paceChart, comparisonChart;
+
         // --- DOM Elements ---
+        const langButtons = document.querySelectorAll('.lang-button');
         const readMoreButtons = document.querySelectorAll('.read-more-button');
         const modal = document.getElementById('contentModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalContent = document.getElementById('modalContent');
+        const modalTitleEl = document.getElementById('modalTitle');
+        const modalContentEl = document.getElementById('modalContent');
         const closeModalButton = document.getElementById('closeModal');
-
-        // --- Modal Logic ---
-        function showModal(title, content) {
-            modalTitle.textContent = title;
-            // Use DOMPurify to sanitize content before injecting into innerHTML
-            modalContent.innerHTML = DOMPurify.sanitize(content, {RETURN_TRUSTED_TYPE: false});
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-
-        function hideModal() {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            modalContent.innerHTML = '';
-        }
-
-        // Add event listeners
-        closeModalButton.addEventListener('click', hideModal);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                hideModal();
-            }
-        });
-
-        // --- Event Listeners for Read More Buttons ---
-        readMoreButtons.forEach(button => {
-            // Filter out the 'conclusion' button as its content is now directly displayed
-            if (button.dataset.section === 'conclusion') {
-                button.style.display = 'none'; // Hide the button
-                return; // Skip adding event listener for this button
-            }
-
-            button.addEventListener('click', () => {
-                const sectionKey = button.dataset.section;
-                // Find the closest parent section or card and then its heading
-                const parentSection = button.closest('.card, section');
-                const sectionTitleElement = parentSection ? parentSection.querySelector('h3, h4') : null;
-                const sectionTitle = sectionTitleElement ? sectionTitleElement.textContent : 'Details'; // Fallback title
-
-                if (!Object.hasOwn(fullTexts, sectionKey)) {
-                    console.error(`No full text found for section key: ${sectionKey}`);
-                    return;
-                }
-                const content = fullTexts[sectionKey];
-                showModal(sectionTitle, content);
-            });
-        });
-
-        // --- Chart.js Setup ---
+        const allTextElements = document.querySelectorAll('[data-key]');
+        
+        // --- CHART SETUP ---
         const FONT_COLOR = '#1f1f1f';
         const GRID_COLOR = 'rgba(31, 31, 31, 0.1)';
         const PALETTE = {
@@ -416,85 +618,154 @@
             red: '#c02c28',
             purple: '#4c4c6d',
         };
-
         const tooltipTitleCallback = (tooltipItems) => {
             const item = tooltipItems[0];
             let label = item.chart.data.labels[item.dataIndex];
-            if (Array.isArray(label)) {
-                return label.join(' ');
-            }
-            return label;
+            return Array.isArray(label) ? label.join(' ') : label;
         };
-        
-        // Chart 1: Pace Chart
-        const paceCtx = document.getElementById('paceChart').getContext('2d');
-        const travelDays = 172 - 29 - 26 - 14; 
-        const nonTravelDays = 29 + 26 + 14;
-        new Chart(paceCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Travel & Action Days', 'Stationary Days'],
-                datasets: [{
-                    label: 'Days',
-                    data: [travelDays, nonTravelDays],
-                    backgroundColor: [PALETTE.green, PALETTE.purple],
-                    borderColor: '#f5f1e6',
-                    borderWidth: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom', labels: { color: FONT_COLOR, font: { size: 12 }}},
-                    title: { display: true, text: 'Breakdown of the 172-Day Outward Journey', color: FONT_COLOR, font: { size: 16, family: 'IM Fell English' }},
-                    tooltip: { callbacks: { title: tooltipTitleCallback } }
-                }
-            }
-        });
 
-        // Chart 2: Comparison Chart
-        const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
-        const comparisonLabels = ['Total Distance (miles)', 'Total Duration (days)', 'Pace to Rivendell (mi/day)'];
-        new Chart(comparisonCtx, {
-            type: 'bar',
-            data: {
-                labels: comparisonLabels,
-                datasets: [
-                    { label: 'Bilbo', data: [950, 172, 10.17], backgroundColor: PALETTE.green },
-                    { label: 'Frodo', data: [1800, 185, 16.9], backgroundColor: PALETTE.red }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: { 
-                        beginAtZero: true, 
-                        ticks: { color: FONT_COLOR }, 
-                        grid: { color: GRID_COLOR }
-                    },
-                    x: { 
-                        ticks: { color: FONT_COLOR, font: { size: 12 }}, 
-                        grid: { display: false }
-                    }
+        function renderCharts(lang) {
+            const langData = translations[lang];
+
+            // Destroy existing charts if they exist
+            if (paceChart) paceChart.destroy();
+            if (comparisonChart) comparisonChart.destroy();
+
+            // Pace Chart
+            const paceCtx = document.getElementById('paceChart').getContext('2d');
+            const travelDays = 172 - 29 - 26 - 14;  
+            const nonTravelDays = 29 + 26 + 14;
+            paceChart = new Chart(paceCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [langData.paceChartLabel1, langData.paceChartLabel2],
+                    datasets: [{
+                        label: 'Days',
+                        data: [travelDays, nonTravelDays],
+                        backgroundColor: [PALETTE.green, PALETTE.purple],
+                        borderColor: '#f5f1e6',
+                        borderWidth: 4
+                    }]
                 },
-                plugins: {
-                    legend: { 
-                        position: 'top', 
-                        labels: { color: FONT_COLOR, font: { size: 14 }}
-                    },
-                    title: { 
-                        display: true, 
-                        text: 'Comparative Journey Metrics', 
-                        color: FONT_COLOR, 
-                        font: { size: 16, family: 'IM Fell English' }
-                    },
-                    tooltip: { 
-                        callbacks: { title: tooltipTitleCallback } 
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: FONT_COLOR, font: { size: 12 }}},
+                        title: { display: true, text: langData.paceChartTitle, color: FONT_COLOR, font: { size: 16, family: 'IM Fell English' }},
+                        tooltip: { callbacks: { title: tooltipTitleCallback } }
                     }
                 }
-            }
+            });
+
+            // Comparison Chart
+            const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+            comparisonChart = new Chart(comparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: langData.comparisonChartXLabels,
+                    datasets: [
+                        { label: langData.comparisonChartLabel1, data: [950, 172, 10.17], backgroundColor: PALETTE.green },
+                        { label: langData.comparisonChartLabel2, data: [1800, 185, 16.9], backgroundColor: PALETTE.red }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { color: FONT_COLOR }, grid: { color: GRID_COLOR }},
+                        x: { ticks: { color: FONT_COLOR, font: { size: 12 }}, grid: { display: false }}
+                    },
+                    plugins: {
+                        legend: { position: 'top', labels: { color: FONT_COLOR, font: { size: 14 }}},
+                        title: { display: true, text: langData.comparisonChartTitle, color: FONT_COLOR, font: { size: 16, family: 'IM Fell English' }},
+                        tooltip: { callbacks: { title: tooltipTitleCallback } }
+                    }
+                }
+            });
+        }
+
+
+        // --- LANGUAGE SWITCHING LOGIC ---
+        function switchLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLang = lang;
+            
+            // Save preference to localStorage
+            localStorage.setItem('preferredLanguage', lang);
+
+            // Update page lang attribute and title
+            document.documentElement.lang = lang;
+            document.title = translations[lang].docTitle;
+
+            // Update all text elements with data-key
+            allTextElements.forEach(el => {
+                const key = el.dataset.key;
+                if (translations[lang][key]) {
+                    el.innerHTML = DOMPurify.sanitize(translations[lang][key]);
+                }
+            });
+
+            // Update active button style
+            langButtons.forEach(button => {
+                button.classList.toggle('active', button.dataset.lang === lang);
+            });
+
+            // Re-render charts with new language data
+            renderCharts(lang);
+        }
+        
+        // --- MODAL LOGIC ---
+        function showModal(title, content) {
+            modalTitleEl.textContent = title;
+            modalContentEl.innerHTML = DOMPurify.sanitize(content, {RETURN_TRUSTED_TYPE: false});
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function hideModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            modalContentEl.innerHTML = '';
+        }
+
+        // --- EVENT LISTENERS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial language
+            const savedLang = localStorage.getItem('preferredLanguage');
+            const initialLang = savedLang && translations[savedLang] ? savedLang : 'en';
+            switchLanguage(initialLang);
+
+            // Language switcher buttons
+            langButtons.forEach(button => {
+                button.addEventListener('click', () => switchLanguage(button.dataset.lang));
+            });
+
+            // Read More buttons
+            readMoreButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const sectionKey = button.dataset.section;
+                    const langData = translations[currentLang];
+                    const content = langData.fullTexts[sectionKey];
+                    
+                    // Get title from the parent card/section's h3/h4
+                    const parentSection = button.closest('.card, section');
+                    const sectionTitleElement = parentSection ? parentSection.querySelector('h3, h4') : null;
+                    const sectionTitle = sectionTitleElement ? sectionTitleElement.textContent : langData.modalDefaultTitle;
+                    
+                    if (content) {
+                        showModal(sectionTitle, content);
+                    } else {
+                        console.error(`No full text found for section key: ${sectionKey} in language: ${currentLang}`);
+                    }
+                });
+            });
+
+            // Modal close listeners
+            closeModalButton.addEventListener('click', hideModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) hideModal();
+            });
         });
     </script>
 </body>
